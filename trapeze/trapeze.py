@@ -1,4 +1,5 @@
 import numpy as np
+from matplotlib import pyplot as plt
 
 
 def trapeze(fct, a, b, m):
@@ -15,6 +16,48 @@ def trapeze(fct, a, b, m):
 
     return integrale
 
+def presentation(fct, a, b, m, titre="Méthode des Trapèzes"):
+
+    h = (b - a) / m
+
+    x_fin = np.linspace(a, b, 1000)
+    y_fin = fct(x_fin)
+
+    x_trap = np.linspace(a, b, m + 1)
+    y_trap = fct(x_trap)
+
+    plt.figure(figsize=(12, 8))
+
+    plt.plot(x_fin, y_fin, 'b-', linewidth=2, label='f(x)')
+    plt.plot(x_trap, y_trap, 'bo', markersize=4, label='Points d\'évaluation')
+
+    for i in range(m):
+        x_gauche = x_trap[i]
+        x_droite = x_trap[i + 1]
+
+        y_gauche = fct(x_gauche)
+        y_droite = fct(x_droite)
+
+        trap_x = [x_gauche, x_gauche, x_droite, x_droite, x_gauche]
+        trap_y = [0, y_gauche, y_droite, 0, 0]
+
+        plt.fill(trap_x, trap_y, 'g', alpha=0.3, edgecolor='darkgreen',
+                 label='Trapèze' if i == 0 else "")
+
+        plt.plot([x_gauche, x_gauche], [0, y_gauche], 'g-', alpha=0.6)
+        plt.plot([x_droite, x_droite], [0, y_droite], 'g-', alpha=0.6)
+
+        plt.plot([x_gauche, x_droite], [y_gauche, y_droite], 'r--', alpha=0.7,
+                 label='Approximation linéaire' if i == 0 else "")
+
+    plt.xlabel('x')
+    plt.ylabel('f(x)')
+    plt.title(f'{titre} - n = {m} intervalles')
+    plt.grid(True, alpha=0.3)
+    plt.legend()
+    plt.show()
+
+    return h
 
 # teste
 def fct(x):

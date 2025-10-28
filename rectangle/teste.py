@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from trapeze import trapeze, presentation
+from rectangle import rectangle, presentation
 
 
 # ============================================================================
@@ -19,7 +19,7 @@ def test_methode_carree():
     a, b = 1, 3
     m = 10
 
-    resultat = trapeze(f, a, b, m)
+    resultat = rectangle(f, a, b, m)
     exacte = (b ** 3 - a ** 3) / 3
 
     print(f"Intervalle: [{a}, {b}]")
@@ -43,7 +43,7 @@ def test_methode_lineaire():
     a, b = 0, 4
     m = 8
 
-    resultat = trapeze(f, a, b, m)
+    resultat = rectangle(f, a, b, m)
     exacte = (3 / 2) * b ** 2 - 2 * b - ((3 / 2) * a ** 2 - 2 * a)
 
     print(f"Intervalle: [{a}, {b}]")
@@ -67,7 +67,7 @@ def test_methode_sinus():
     a, b = 0, np.pi
     m = 12
 
-    resultat = trapeze(f, a, b, m)
+    resultat = rectangle(f, a, b, m)
     exacte = 2.0  # ∫sin(x)dx de 0 à π = 2
 
     print(f"Intervalle: [0, π]")
@@ -91,7 +91,7 @@ def test_methode_exponentielle():
     a, b = 0, 2
     m = 10
 
-    resultat = trapeze(f, a, b, m)
+    resultat = rectangle(f, a, b, m)
     exacte = np.exp(b) - np.exp(a)
 
     print(f"Intervalle: [{a}, {b}]")
@@ -115,7 +115,7 @@ def test_methode_complexe():
     a, b = 0, 2
     m = 15
 
-    resultat = trapeze(f, a, b, m)
+    resultat = rectangle(f, a, b, m)
     # Calcul de la valeur exacte
     exacte = (b ** 3 / 3 + np.sin(b)) - (a ** 3 / 3 + np.sin(a))
 
@@ -141,7 +141,7 @@ def test_simple():
     b = 3
     m = 10  # Réduit pour mieux visualiser
 
-    resultat = trapeze(fct, a, b, m)
+    resultat = rectangle(fct, a, b, m)
     exacte = (b ** 3 - a ** 3) / 3
 
     print(f"Resultat methode rectangle : {resultat}")
