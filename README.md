@@ -2,95 +2,75 @@
 
 ## 1. Méthode de Jacobi
 **Idée générale :**  
-Méthode itérative pour résoudre un système linéaire \( A x = b \) en isolant chaque variable.  
+Méthode itérative pour résoudre un système linéaire Ax = b en isolant chaque variable.  
 
 **Formule :**  
-\[
-x_i^{(k+1)} = \frac{1}{a_{ii}} \left( b_i - \sum_{j \ne i} a_{ij} x_j^{(k)} \right)
-\]
+x_i^(k+1) = (1 / a_ii) * (b_i - Σ_{j ≠ i} a_ij * x_j^(k))
 
 ---
 
 ## 2. Méthode de relaxation (Gauss-Seidel ou SOR)
 **Idée générale :**  
-Amélioration de Jacobi : les valeurs déjà calculées sont immédiatement réutilisées.  
-(SOR ajoute un facteur de relaxation \( \omega \) pour accélérer la convergence.)
+Amélioration de Jacobi : les nouvelles valeurs calculées sont immédiatement réutilisées.  
+La méthode SOR ajoute un facteur de relaxation ω pour accélérer la convergence.  
 
 **Formule (Gauss-Seidel) :**  
-\[
-x_i^{(k+1)} = \frac{1}{a_{ii}} \left( b_i - \sum_{j < i} a_{ij} x_j^{(k+1)} - \sum_{j > i} a_{ij} x_j^{(k)} \right)
-\]
+x_i^(k+1) = (1 / a_ii) * (b_i - Σ_{j < i} a_ij * x_j^(k+1) - Σ_{j > i} a_ij * x_j^(k))
 
 **Formule (SOR) :**  
-\[
-x_i^{(k+1)} = (1 - \omega)x_i^{(k)} + \frac{\omega}{a_{ii}} \left( b_i - \sum_{j < i} a_{ij} x_j^{(k+1)} - \sum_{j > i} a_{ij} x_j^{(k)} \right)
-\]
+x_i^(k+1) = (1 - ω) * x_i^(k) + (ω / a_ii) * (b_i - Σ_{j < i} a_ij * x_j^(k+1) - Σ_{j > i} a_ij * x_j^(k))
 
 ---
 
 ## 3. Interpolation de Lagrange
 **Idée générale :**  
-Construit un polynôme \( P(x) \) passant exactement par les points donnés \((x_i, y_i)\).
+Construit un polynôme P(x) qui passe exactement par les points donnés (x_i, y_i).  
 
 **Formule :**  
-\[
-P(x) = \sum_{i=0}^{n} y_i \prod_{j=0, j \ne i}^{n} \frac{x - x_j}{x_i - x_j}
-\]
+P(x) = Σ_{i=0}^{n} [ y_i * Π_{j=0, j ≠ i}^{n} (x - x_j) / (x_i - x_j) ]
 
 ---
 
 ## 4. Spline quadratique
 **Idée générale :**  
-Approxime une fonction par morceaux de **polynômes du second degré** assurant la continuité des dérivées.
+Approxime une fonction par morceaux de polynômes du second degré assurant la continuité.  
 
-**Forme générale sur chaque intervalle \([x_i, x_{i+1}]\) :**  
-\[
-S_i(x) = a_i + b_i(x - x_i) + c_i(x - x_i)^2
-\]
-
-Les coefficients \(a_i, b_i, c_i\) sont déterminés pour assurer la continuité de \(S\) et de \(S'\).
+**Formule sur [x_i, x_{i+1}] :**  
+S_i(x) = a_i + b_i * (x - x_i) + c_i * (x - x_i)²
 
 ---
 
 ## 5. Méthode des rectangles
 **Idée générale :**  
-Approxime l’intégrale d’une fonction par la somme des aires de rectangles.
+Approxime une intégrale par la somme des aires de rectangles.  
 
 **Formule :**  
-\[
-\int_a^b f(x) \, dx \approx h \sum_{i=0}^{n-1} f(x_i)
-\]
-avec \(h = \frac{b - a}{n}\)
+∫ₐᵇ f(x) dx ≈ h * Σ_{i=0}^{n-1} f(x_i)  
+où h = (b - a) / n
 
 ---
 
 ## 6. Méthode des trapèzes
 **Idée générale :**  
-Approxime l’intégrale par la somme des aires de trapèzes entre les points.  
+Approxime une intégrale par la somme des aires de trapèzes entre les points.  
 
 **Formule :**  
-\[
-\int_a^b f(x) \, dx \approx \frac{h}{2} \left[ f(x_0) + 2\sum_{i=1}^{n-1} f(x_i) + f(x_n) \right]
-\]
+∫ₐᵇ f(x) dx ≈ (h / 2) * [ f(x₀) + 2Σ_{i=1}^{n-1} f(x_i) + f(x_n) ]
 
 ---
 
 ## 7. Méthode de Simpson
 **Idée générale :**  
-Utilise des **paraboles** pour mieux approximer l’intégrale sur chaque sous-intervalle.  
+Approxime une intégrale en utilisant des paraboles sur chaque sous-intervalle.  
 
 **Formule (Simpson 1/3) :**  
-\[
-\int_a^b f(x) \, dx \approx \frac{h}{3} \left[ f(x_0) + 4\sum_{i=1,\,\text{impair}}^{n-1} f(x_i) + 2\sum_{i=2,\,\text{pair}}^{n-2} f(x_i) + f(x_n) \right]
-\]
+∫ₐᵇ f(x) dx ≈ (h / 3) * [ f(x₀) + 4Σ_{i impair} f(x_i) + 2Σ_{i pair} f(x_i) + f(x_n) ]
 
 ---
 
 ## 8. Méthode de Newton (Newton-Raphson)
 **Idée générale :**  
-Méthode itérative pour trouver les racines de \( f(x) = 0 \) en utilisant la tangente.  
+Méthode itérative pour trouver les racines de f(x) = 0 à l’aide des tangentes.  
 
 **Formule :**  
-\[
-x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
-\]
+x_(n+1) = x_n - f(x_n) / f'(x_n)
